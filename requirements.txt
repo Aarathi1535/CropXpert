@@ -60,6 +60,7 @@ scikit-learn==1.5.0
 scipy==1.13.0
 seaborn==0.13.2
 six==1.16.0
+SQLAlchemy==1.4.20
 stack-data==0.6.3
 these==1
 threadpoolctl==3.5.0
