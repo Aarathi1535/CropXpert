@@ -5,7 +5,7 @@ import warnings
 from sklearn.model_selection import train_test_split
 warnings.filterwarnings('ignore')
 
-df = pd.read_csv(r"C:\Users\hp\OneDrive\Desktop\My Desktop\Crop_recommendation.csv")
+df = pd.read_csv("Crop_recommendation.csv")
 df1 = df.drop(df[['Unnamed: 8','Unnamed: 9']],axis=1)
 x = df1.drop(['label'],axis=1)
 y = df1['label']
