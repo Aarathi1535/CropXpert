@@ -6,13 +6,13 @@ from sklearn.model_selection import train_test_split
 import warnings
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///C:/Users/hp/OneDrive/Desktop/My Desktop/machine learning/Crop Recommendation System/Feedback.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite://aarathisree:Aarathi1535@aarathisree:3306/Feedback.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 warnings.filterwarnings('ignore')
 
-df = pd.read_csv(r"C:\Users\hp\OneDrive\Desktop\My Desktop\Crop_recommendation.csv")
+df = pd.read_csv("Crop_recommendation.csv")
 df1 = df.drop(['Unnamed: 8', 'Unnamed: 9'], axis=1)
 x = df1.drop(['label'], axis=1)
 y = df1['label']
