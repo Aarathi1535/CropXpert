@@ -11,7 +11,9 @@ body {
     top: 30px; 
     left: 10px; 
 }
-
+.result{
+    font-size: 25px;
+}
 .logo img {
     height: 100px; 
     width: 100px; 
