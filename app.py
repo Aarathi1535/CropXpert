@@ -25,6 +25,7 @@ class Feedback(db.Model):
     email = db.Column(db.String(255), nullable=False)
     suggestion = db.Column(db.Text, nullable=False)
 
+db.create_all
 @app.route('/')
 def home():
     return render_template('index.html')
