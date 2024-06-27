@@ -6,7 +6,7 @@ from sklearn.model_selection import train_test_split
 import warnings
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///Feedback.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///aarathi_1535:Aarathi1535@aarathisree:3306/Feedback.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
