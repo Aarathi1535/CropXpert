@@ -11,7 +11,7 @@ body {
     top: 30px; 
     left: 10px; 
 }
-.result{
+#result{
     font-size: 25px;
 }
 .logo img {
