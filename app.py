@@ -6,7 +6,7 @@ from sklearn.model_selection import train_test_split
 import warnings
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///aarathisree:Aarathi1535@aarathisree:3306/Feedback.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///Feedback.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
@@ -25,7 +25,6 @@ class Feedback(db.Model):
     email = db.Column(db.String(255), nullable=False)
     suggestion = db.Column(db.Text, nullable=False)
 
-db.create_all
 @app.route('/')
 def home():
     return render_template('index.html')
