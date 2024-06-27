@@ -16,7 +16,7 @@ df = pd.read_csv("Crop_recommendation.csv")
 df1 = df.drop(['Unnamed: 8', 'Unnamed: 9'], axis=1)
 x = df1.drop(['label'], axis=1)
 y = df1['label']
-x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.3)
+x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.25)
 model = tree.DecisionTreeClassifier()
 model.fit(x_train, y_train)
 
