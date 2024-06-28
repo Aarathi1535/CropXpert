@@ -11,9 +11,7 @@ body {
     top: 30px; 
     left: 10px; 
 }
-#result{
-    font-size: 30px;
-}
+
 .logo img {
     height: 100px; 
     width: 100px; 
@@ -78,7 +76,10 @@ form {
 .form-group label {
     margin-bottom: 5px;
 }
-
+#result{
+    font-size: 40px;
+    color: hsl(0, 40%, 96%);
+}
 form input[type="number"],
 form input[type="submit"] {
     padding: 10px;
