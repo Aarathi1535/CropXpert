@@ -31,7 +31,7 @@ lazy_loader==0.4
 MarkupSafe==2.1.5
 matplotlib==3.8.4
 matplotlib-inline==0.1.7
-mysql-connector-python==8.0.37
+mysql-connector-python==8.0.28
 nest-asyncio==1.6.0
 networkx==3.3
 numpy==1.26.4
