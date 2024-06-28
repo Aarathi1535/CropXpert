@@ -6,7 +6,7 @@ from sklearn.model_selection import train_test_split
 import warnings
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///Feedback.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://aarathi_1535:Aarathi_1535@localhost:3306/FeedbackDB'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
@@ -34,9 +34,13 @@ def feedback():
     email = request.form['email']
     suggestion = request.form['suggestion']
     new_feedback = Feedback(email=email, suggestion=suggestion)
-    db.session.add(new_feedback)
-    db.session.commit()
-    return redirect(url_for('home'))
+    try:
+        db.session.add(new_feedback)
+        db.session.commit()
+        return redirect(url_for('home'))
+    except Exception as e:
+        db.session.rollback()
+        return f"Error: {str(e)}"
 
 @app.route('/result', methods=["POST"])
 def result():
