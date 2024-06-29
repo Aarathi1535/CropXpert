@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
-
     <header>
         <div class = "logo">
             <img src="https://media.istockphoto.com/id/958252646/photo/young-green-corn-growing-on-the-field-young-corn-plants.jpg?s=612x612&w=0&k=20&c=lbeh-vBIGjaD3ZrIqlDt-9jmNew44StD73fxGd2WkEI=" alt="logo">
@@ -16,20 +15,20 @@
         <div class="container">
             <div class="branding">
                 <p class="copyright">© 2024 Crop Recommendation System App by Aarathisree Balla. All rights reserved.</p>
-                <h1>Crop Recommendation System</h1>
+                <h1>CROP RECOMMENDATION SYSTEM</h1>
             </div>
-            </div>
+        </div>
             <nav>
                 <ul>
                     <li><a href="#home" class="tab-link active" data-tab="home">Home</a></li>
                     <li><a href="#recommendations" class="tab-link active" data-tab="recommendations">Crop Recommendations</a></li>
+                    <li><a href="#fertirecommendations" class="tab-link active" data-tab="fertirecommendations">Fertilizer Recommendations</a></li>
                     <li><a href="#about" class="tab-link" data-tab="about">About</a></li>
                     <li><a href="#contact" class="tab-link" data-tab="contact">Contact</a></li>
                 </ul>
             </nav>
         </div>
     </header>
-
     <main>
         <div class="container">
             <section id="home" class="tab-content active">
@@ -299,17 +298,33 @@
                             <p>It thrives in tropical climates with ample rainfall.</p>
                         </div>
                     </div>
+                    <div class="crop-card">
+                        <img src="{{ url_for('static', filename='images/sugarcane.jpg') }}" alt="Sugarcane">
+                        <div class="crop-details">
+                            <h3>Sugarcane</h3>
+                            <p>Click to learn more</p>
+                        </div>
+                        <div class="crop-info">
+                            <h3>Sugarcane</h3>
+                            <p>Sugarcane is a major source of sugar and ethanol.</p>
+                            <p>It grows well in tropical regions with high rainfall and sunshine.</p>
+                        </div>
+                    </div>
+                    <div class="crop-card">
+                        <img src="{{ url_for('static', filename='images/tobacco.jpg') }}" alt="Tobacco">
+                        <div class="crop-details">
+                            <h3>Tobacco</h3>
+                            <p>Click to learn more</p>
+                        </div>
+                        <div class="crop-info">
+                            <h3>Tobacco</h3>
+                            <p>Tobacco is a significant commercial crop used in the production of cigarettes.</p>
+                            <p>It requires a warm climate and well-drained soil.</p>
+                        </div>
+                    </div>            
                 </div>               
                 </div>
-            </section>
-                
-            <section id="about" class="tab-content">
-                <h2>About</h2>
-                <h3>Welcome to the Crop Recommendation System, your ultimate guide to smarter farming!</h3>
-                <p>Our Crop Recommendation System aims to provide the best results to its farmers by receiving some of the basic inputs like nitogren, phosphorus and potassium contents followed by temperature, humidity, pH and rainfall details. </p>
-                <p>Our mission is to empower farmers and agriculturists with the knowledge and tools they need to make informed decisions about what crops to plant. By analyzing soil data, weather patterns, and other crucial factors, our system provides personalized crop recommendations tailored to your specific land conditions.</p>
-                <p>With our advanced AI and machine learning algorithms, we take the guesswork out of farming. Whether you’re a seasoned farmer looking to optimize your yield or a new farmer wanting to start off on the right foot, our system is designed to help you grow the best crops for your soil.</p>
-                <p>Join the future of agriculture with our easy-to-use interface and expert advice. Let’s cultivate a prosperous and sustainable farming future together!</p>
+                    
             </section>
 
             <section id="recommendations" class="tab-content">
@@ -354,6 +369,67 @@
                 </section>
             </section>
 
+            <section id="fertirecommendations" class="tab-content">
+                <h2>Fertilizer Recommendation</h2>
+                <section id="showcase">
+                    <h1>Find the Best Fertilizer for Your Crop</h1>
+                    <p>Input your soil data and get recommendations for the best fertilizers to use.</p>
+                    <p>Follow the below <i>MENU</i> for the Soil Type and Crop Type Fields</p>
+                    <p>Crop Type Field:-</p>
+                    <p>Barley = 0<br>Cotton = 1<br>Ground Nuts = 2<br>Maize = 3<br>Millets = 4<br>Oil seeds = 5<br>Paddy = 6<br>Pulses = 7<br>Sugarcane = 8<br>Tobacco = 9<br>Wheat = 10</p>
+                    <p>Soil Type Field:-</p>
+                    <p>Black = 0<br>Clayey = 1<br>Loamy = 2<br>Red = 3<br>Sandy = 4</p>
+                </section>
+                <section id="input-form">
+                    <h2>Enter the necessary details so that we can provide you with the best fertilizer :) !!</h2>
+                    <form method="POST" action="{{ url_for('result2') }}">
+                        <div class="form-group">
+                            <label for="temp">Temperature :</label>
+                            <input type="number" id="temp" name="temp" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="humid">Humidity :</label>
+                            <input type="number" id="humid" name="humid" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="moisture">Moisture :</label>
+                            <input type="number" id="moisture" name="moisture" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="nitro">Nitrogen :</label>
+                            <input type="number" id="nitro" name="nitro"  required>
+                        </div>
+                        <div class="form-group">
+                            <label for="potash">Potassium :</label>
+                            <input type="number" id="potash" name="potash"  required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phospho">Phosphorus :</label>
+                            <input type="number" id="phospho" name="phospho"  required>
+                        </div>
+                        <div class="form-group">
+                            <label for="soil">Soil Type :</label>
+                            <input type="number" id="soil" name="soil"  required>
+                        </div>
+                        <div class="form-group">
+                            <label for="crop">Crop Type :</label>
+                            <input type="number" id="crop" name="crop"  required>
+                        </div>
+                        <input type="submit" value="Get Recommendations">
+                    </form>
+                </section>
+            </section>
+
+            <section id="about" class="tab-content">
+                <h2>About</h2>
+                <h3>Welcome to the Crop Recommendation System, your ultimate guide to smarter farming!</h3>
+                <p>Our Crop Recommendation System aims to provide the best results to its farmers by receiving some of the basic inputs like nitogren, phosphorus and potassium contents followed by temperature, humidity, pH and rainfall details. </p>
+                <p>Our mission is to empower farmers and agriculturists with the knowledge and tools they need to make informed decisions about what crops to plant. By analyzing soil data, weather patterns, and other crucial factors, our system provides personalized crop recommendations tailored to your specific land conditions.</p>
+                <p>With our advanced AI and machine learning algorithms, we take the guesswork out of farming. Whether you’re a seasoned farmer looking to optimize your yield or a new farmer wanting to start off on the right foot, our system is designed to help you grow the best crops for your soil.</p>
+                <p>Apart from just recommending the suitable crops, we also recommend the suitable fertilizers to bring the best for the farmers.</p>
+                <p>Join the future of agriculture with our easy-to-use interface and expert advice. Let’s cultivate a prosperous and sustainable farming future together!</p>
+            </section>
+
             <section id="contact" class="tab-content">
                 <h2>Contact</h2>
                 <p>Get in touch with us for more information or support.</p>
@@ -361,11 +437,11 @@
                 <p><strong>Email:</strong> aarathisree.1535@gmail.com</p>
                 <p>Your feedback is very valuable to us. Please feel free to give us your suggestions.</p>
                 <h3>Feedback</h3>
-                <form>
+                <form method="POST" action="{{ url_for('feedback') }}">
                     <label for="email">Email:</label>
                     <input type="email" id="email" name="email" required><br><br>
-                    <label for="suggest">Suggestions:</label>
-                    <input type="text" id="suggest" name="suggest" rows="4" cols="50" required><br><br>
+                    <label for="suggestion">Suggestions:</label>
+                    <input type="text" id="suggestion" name="suggestion" rows="4" cols="50" required><br><br>
                     <input type="submit" value="Submit">
                 </form>
             </section>
