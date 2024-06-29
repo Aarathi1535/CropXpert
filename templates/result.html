@@ -2,36 +2,34 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">on System App by Aarathisree Balla. All rights reserved.</p>
+    </div>
     <title>Crop Recommendation Result</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
-
     <header>
-        <div class="container">
-            <div class="branding">
-                <h1>Crop Recommendation Result</h1>
-            </div>
+    <div class = "logo">
+        <img src="https://media.istockphoto.com/id/958252646/photo/young-green-corn-growing-on-the-field-young-corn-plants.jpg?s=612x612&w=0&k=20&c=lbeh-vBIGjaD3ZrIqlDt-9jmNew44StD73fxGd2WkEI=" alt="logo">
+    </div>
+    <div class="container">
+        <div class="branding">
+            <p class="copyright">© 2024 Crop Recommendation System App by Aarathisree Balla. All rights reserved.</p>
+            <h1>Crop Recommendation Result</h1>
         </div>
-    </header>
-
+    </div>
     <main>
-        <div class="container">
+    </header>
+        <div class="contain">
             <section id="result">
                 <h2>Recommended Crop</h2>
-                <p><i>{{ result | safe }}</i></p>
+                <p><i><strong>{{ result | safe }}</strong></i></p>
                 <p>We suggest you the above crop as the most appropriate one.</p>
                 <p>Thank you for letting us choose the best for you !!!</p>
             </section>
-            <a href="{{ url_for('home') }}">Go Back</a>
+            <a href="{{ url_for('home') }}">Go Back</a><br>
+            <a href="{{ url_for('details') }}">Want to know more about the recommended crop ? Click Here!!</a>
         </div>
     </main>
-
-    <footer>
-        <div class="container">
-            <p>&copy; 2024 Crop Recommendation System App by Aarathisree Balla. All rights reserved.</p>
-        </div>
-    </footer>
 </body>
 </html>
