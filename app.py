@@ -96,8 +96,10 @@ def result2():
     )
     return render_template('result2.html', result=result)
 
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://aarathi_1535:Aarathi_1535@localhost:3306/FeedbackDB'
-#app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+#For Database Connectivity
+'''
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://aarathi_1535:Aarathi_1535@localhost:3306/FeedbackDB'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 class Feedback(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -112,6 +114,7 @@ def feedback():
     db.session.add(new_feedback)
     db.session.commit()
     return redirect(url_for('home'))
+'''
 
 if __name__ == '__main__':
     app.run(debug=True)
