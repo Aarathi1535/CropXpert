@@ -51,7 +51,7 @@ pyparsing==3.1.2
 pytesseract==0.3.10
 python-dateutil==2.9.0.post0
 pytz==2024.1
-pywin32==306
+pywin32==305
 pyzmq==26.0.3
 requests==2.31.0
 scikit-image==0.23.1
