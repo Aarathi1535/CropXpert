@@ -17,13 +17,13 @@ db = SQLAlchemy(app)
 def home():
     return render_template('index.html')
 
-df5 = pd.read_csv("crop_info.csv")
 @app.route('/details')
 def details():
     return render_template('details.html')
 
 @app.route('/cropdetails', methods=["POST"])
 def cropdetails():
+    df5 = pd.read_csv("crop_info.csv")
     cropname = str(request.form['cropname'])
     results = ''
     if cropname in df5['Crop Name'].values:
