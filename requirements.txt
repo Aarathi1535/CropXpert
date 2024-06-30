@@ -34,7 +34,6 @@ matplotlib-inline==0.1.7
 mysql-connector-python==8.4.0
 nest-asyncio==1.6.0
 networkx==3.3
-numpy==1.21.1  # Adjusted for compatibility with Python 3.7-3.10
 opencv-python==4.9.0.80
 opencv-python-headless==4.9.0.80
 openpyxl==3.1.2
