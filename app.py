@@ -13,9 +13,9 @@ app = Flask(__name__)
 def home():
     return render_template('index.html')
 
-@app.route('/details')
+'''@app.route('/details')
 def details():
-    return render_template('details.html')
+    return render_template('details.html')'''
     
 @app.route('/cropdetails', methods=["POST"])
 def cropdetails():
