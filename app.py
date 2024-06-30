@@ -9,10 +9,6 @@ import warnings
 warnings.filterwarnings('ignore')
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://aarathi_1535:Aarathi_1535@localhost:3306/FeedbackDB'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db = SQLAlchemy(app)
-
 @app.route('/')
 def home():
     return render_template('index.html')
@@ -100,6 +96,9 @@ def result2():
     )
     return render_template('result2.html', result=result)
 
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://aarathi_1535:Aarathi_1535@localhost:3306/FeedbackDB'
+#app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app)
 class Feedback(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(255), nullable=False)
@@ -110,13 +109,9 @@ def feedback():
     email = request.form['email']
     suggestion = request.form['suggestion']
     new_feedback = Feedback(email=email, suggestion=suggestion)
-    try:
-        db.session.add(new_feedback)
-        db.session.commit()
-        return redirect(url_for('home'))
-    except Exception as e:
-        db.session.rollback()
-        return f"Error: {str(e)}"
+    db.session.add(new_feedback)
+    db.session.commit()
+    return redirect(url_for('home'))
 
 if __name__ == '__main__':
     app.run(debug=True)
