@@ -17,7 +17,7 @@ db = SQLAlchemy(app)
 def home():
     return render_template('index.html')
 
-df5 = pd.read_csv("details.csv")
+df5 = pd.read_csv("crop_info.csv")
 @app.route('/details')
 def details():
     return render_template('details.html')
