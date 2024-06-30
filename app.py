@@ -20,7 +20,7 @@ def details():
 @app.route('/cropdetails', methods=["POST"])
 def cropdetails():
     df5 = pd.read_csv("crop_info.csv")
-    cropname = str(request.form['cropname'])
+    cropname = str(request.form['cropname']).lower()
     results = ''
     if cropname in df5['Crop Name'].values:
         results = df5[df5['Crop Name'] == cropname]['Info'].iloc[0]
