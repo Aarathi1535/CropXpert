@@ -6,12 +6,13 @@ Along with this, the project also recommends users with the best fertilizer base
 
 **The technologies and libraries used in this project are**:-
 1. Machine Learning - Decision Tree Classifier
-2. Pre Processing - Label Encoder for string valued columns in dataset
+2. Pre Processing - Label Encoder (for string valued columns in dataset)
 3. Python
 4. Flask
 5. HTML, CSS and JavaScript - Frontend Website
 6. MySQL - Database Integration
-7. Libraries : SQLAlchemy, scikit-learn, seaborn, matplotlib, pandas and flask
+7. Confusion Matrix - To plot the comparison between predicted and tested values
+8. Libraries : SQLAlchemy, scikit-learn, seaborn, matplotlib, pandas and flask
 
 The flask application was deployed on render.com :-
 1. Build Command : $pip install -r requirements.txt
