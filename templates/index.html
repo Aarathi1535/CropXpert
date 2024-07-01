@@ -372,14 +372,87 @@
             <section id="fertirecommendations" class="tab-content">
                 <h2>Fertilizer Recommendation</h2>
                 <section id="showcase">
-                    <h1>Find the Best Fertilizer for Your Crop</h1>
-                    <p>Input your soil data and get recommendations for the best fertilizers to use.</p>
-                    <p>Follow the below <i>MENU</i> for the Soil Type and Crop Type Fields</p>
-                    <p>Crop Type Field:-</p>
-                    <p>Barley = 0<br>Cotton = 1<br>Ground Nuts = 2<br>Maize = 3<br>Millets = 4<br>Oil seeds = 5<br>Paddy = 6<br>Pulses = 7<br>Sugarcane = 8<br>Tobacco = 9<br>Wheat = 10</p>
-                    <p>Soil Type Field:-</p>
-                    <p>Black = 0<br>Clayey = 1<br>Loamy = 2<br>Red = 3<br>Sandy = 4</p>
+    <h1>Find the Best Fertilizer for Your Crop</h1>
+    <p>Input your soil data and get recommendations for the best fertilizers to use.</p>
+    <p>Follow the below <i>MENU</i> for the Soil Type and Crop Type Fields</p>
+      <table>
+        <tr>
+            <th>Crop Type</th>
+            <th>Field Value</th>
+        </tr>
+        <tr>
+            <td>Barley</td>
+            <td>0</td>
+          </tr>
+           <tr>
+              <td>Cotton</td>
+              <td>1</td>
+           </tr>
+            <tr>
+               <td>Ground Nuts</td>
+                <td>2</td>
+            </tr>
+             <tr>
+               <td>Maize</td>
+                <td>3</td>
+             </tr>
+              <tr>
+               <td>Millets</td>
+               <td>4</td>
+             </tr>
+              <tr>
+               <td>Oil seeds</td>
+                <td>5</td>
+              </tr>
+               <tr>
+                 <td>Paddy</td>
+                 <td>6</td>
+               </tr>
+                <tr>
+                <td>Pulses</td>
+                <td>7</td>
+               </tr>
+                <tr>
+                 <td>Sugarcane</td>
+                  <td>8</td>
+                </tr>
+                 <tr>
+                  <td>Tobacco</td>
+                    <td>9</td>
+                 </tr>
+                  <tr>
+                   <td>Wheat</td>
+                   <td>10</td>
+                  </tr>
+             </table>
+              <table>
+                   <tr>
+                   <th>Soil Type</th>
+                   <th>Field Value</th>
+                   </tr>
+                   <tr>
+                    <td>Black</td>
+                     <td>0</td>
+                   </tr>
+                    <tr>
+                      <td>Clayey</td>
+                       <td>1</td>
+                    </tr>
+                     <tr>
+                      <td>Loamy</td>
+                       <td>2</td>
+                      </tr>
+                      <tr>
+                       <td>Red</td>
+                        <td>3</td>
+                      </tr>
+                       <tr>
+                        <td>Sandy</td>
+                        <td>4</td>
+                       </tr>
+                    </table>
                 </section>
+
                 <section id="input-form">
                     <h2>Enter the necessary details so that we can provide you with the best fertilizer :) !!</h2>
                     <form method="POST" action="{{ url_for('result2') }}">
