@@ -1,21 +1,20 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Croppy Happy</title>
+    <title>Crop Recommendation System</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
     <header>
         <div class = "logo">
-            <img src="{{ url_for('static', filename='images/crop-anime.jpg') }}" alt="logo">
+            <img src="https://media.istockphoto.com/id/958252646/photo/young-green-corn-growing-on-the-field-young-corn-plants.jpg?s=612x612&w=0&k=20&c=lbeh-vBIGjaD3ZrIqlDt-9jmNew44StD73fxGd2WkEI=" alt="logo">
         </div>
         <div class="container">
             <div class="branding">
                 <p class="copyright">© 2024 Crop Recommendation System App by Aarathisree Balla. All rights reserved.</p>
-                <h1>CROPPY HAPPY!!</h1>
+                <h1>CROP RECOMMENDATION SYSTEM</h1>
             </div>
         </div>
             <nav>
@@ -23,6 +22,7 @@
                     <li><a href="#home" class="tab-link active" data-tab="home">Home</a></li>
                     <li><a href="#recommendations" class="tab-link active" data-tab="recommendations">Crop Recommendations</a></li>
                     <li><a href="#fertirecommendations" class="tab-link active" data-tab="fertirecommendations">Fertilizer Recommendations</a></li>
+                    <li><a href="#pestdetection" class="tab-link active" data-tab="pestdetection">Pest Detection</a></li>
                     <li><a href="#about" class="tab-link" data-tab="about">About</a></li>
                     <li><a href="#contact" class="tab-link" data-tab="contact">Contact</a></li>
                 </ul>
@@ -428,7 +428,6 @@
                        </tr>
                     </table>
                 </section>
-
                 <section id="input-form">
                     <h2>Enter the necessary details so that we can provide you with the best fertilizer :) !!</h2>
                     <form method="POST" action="{{ url_for('result2') }}">
@@ -465,6 +464,24 @@
                             <input type="number" id="crop" name="crop"  required>
                         </div>
                         <input type="submit" value="Get Recommendations">
+                    </form>
+                </section>
+            </section>
+            <!-- Pest Detection Section -->
+            <section id="pestdetection" class="tab-content">
+                <h2>Pest Detection</h2>
+                <section id="showcase">
+                    <h1>Upload an Image for Pest Detection</h1>
+                    <p>Upload an image of a pest to identify it and get recommendations.</p>
+                </section>
+                <section id="input-form">
+                    <h2>Select an image to detect the pest:</h2>
+                    <form method="POST" action="{{ url_for('upload_image') }}" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="file">Choose Image:</label>
+                            <input type="file" id="file" name="file" accept="image/*" required>
+                        </div>
+                        <input type="submit" value="Detect Pest">
                     </form>
                 </section>
             </section>
