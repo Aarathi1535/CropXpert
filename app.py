@@ -1,14 +1,55 @@
 from flask import Flask, render_template, request, redirect, url_for
-from flask_sqlalchemy import SQLAlchemy
+#from flask_sqlalchemy import SQLAlchemy
 from sklearn import tree
 from sklearn.ensemble import RandomForestClassifier
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
 import warnings
+import torch
+import torchvision.transforms as transforms
+from torchvision import models
+from PIL import Image
+import json
+import os
+
 warnings.filterwarnings('ignore')
 
+# Load the ImageNet labels from the JSON file
+with open("imagenet-simple-labels.json", 'r') as file:
+    imagenet_labels = json.load(file)
+
+# Load the pre-trained ResNet model
+model3 = models.resnet50(pretrained=True)
+model3.eval()  
+
+# Define the transformation pipeline
+preprocess = transforms.Compose([
+    transforms.Resize(256),
+    transforms.CenterCrop(224),
+    transforms.ToTensor(),
+    transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+])
+
+def preprocess_image(image_path):
+    image = Image.open(image_path).convert('RGB')
+    image = preprocess(image)
+    image = image.unsqueeze(0)  
+    return image
+
+def predict_pest(image_path):
+    image = preprocess_image(image_path)
+
+    # Perform inference
+    with torch.no_grad():
+        outputs = model3(image)
+
+    # Get the predicted class
+    _, predicted = torch.max(outputs, 1)
+    return predicted.item()
+
 app = Flask(__name__)
+
 @app.route('/')
 def home():
     return render_template('index.html')
@@ -16,7 +57,7 @@ def home():
 @app.route('/details')
 def details():
     return render_template('details.html')
-    
+
 @app.route('/cropdetails', methods=["POST"])
 def cropdetails():
     df5 = pd.read_csv("crop_info.csv")
@@ -26,7 +67,7 @@ def cropdetails():
         results = df5[df5['Crop Name'] == cropname]['Info'].iloc[0]
     return render_template('cropdetails.html', result=results)
 
-#Crop Recommendation Section
+# Crop Recommendation Section
 df = pd.read_csv("Crop_recommendation.csv")
 df1 = df.drop(['Unnamed: 8', 'Unnamed: 9'], axis=1)
 x = df1.drop(['label'], axis=1)
@@ -58,7 +99,7 @@ def result():
     )
     return render_template('result.html', result=result)
 
-#Fertilizer Recommendation Section
+# Fertilizer Recommendation Section
 df2 = pd.read_csv("Fertilizer Prediction.csv")
 le = LabelEncoder()
 df2['New_Soil_type'] = le.fit_transform(df2['Soil Type'])
@@ -96,25 +137,31 @@ def result2():
     )
     return render_template('result2.html', result=result)
 
-#For Database Connectivity
-'''
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://aarathi_1535:Aarathi_1535@localhost:3306/FeedbackDB'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db = SQLAlchemy(app)
-class Feedback(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(255), nullable=False)
-    suggestion = db.Column(db.Text, nullable=False)
+# Image Upload and Prediction Section
+@app.route('/upload_image', methods=['POST'])
+def upload_image():
+    if 'file' not in request.files:
+        return redirect(request.url)
+    
+    file = request.files['file']
+    if file.filename == '':
+        return redirect(request.url)
+    
+    if file:
+        # Save the file to a temporary location
+        file_path = os.path.join('uploads', file.filename)
+        file.save(file_path)
 
-@app.route('/feedback', methods=["POST"])
-def feedback():
-    email = request.form['email']
-    suggestion = request.form['suggestion']
-    new_feedback = Feedback(email=email, suggestion=suggestion)
-    db.session.add(new_feedback)
-    db.session.commit()
-    return redirect(url_for('home'))
-'''
+        # Make a prediction
+        predicted_class = predict_pest(file_path)
+        predicted_label = imagenet_labels[predicted_class - 1]
 
+        # Return the result to the pest_detection.html template
+        return render_template('pest_detection.html', label=predicted_label)
+
+    return render_template('index.html')
+
+# Ensure the uploads directory exists
 if __name__ == '__main__':
+    os.makedirs('uploads', exist_ok=True)
     app.run(debug=True)
