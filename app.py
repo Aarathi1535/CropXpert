@@ -20,7 +20,7 @@ with open("imagenet-simple-labels.json", 'r') as file:
     imagenet_labels = json.load(file)
 
 # Load the pre-trained ResNet model
-model3 = models.resnet50(pretrained=True)
+model3 = models.resnet18(pretrained=True)
 model3.eval()  
 
 # Define the transformation pipeline
