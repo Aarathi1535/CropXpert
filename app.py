@@ -1,5 +1,4 @@
 from flask import Flask, render_template, request, redirect, url_for
-#from flask_sqlalchemy import SQLAlchemy
 from sklearn import tree
 from sklearn.ensemble import RandomForestClassifier
 import pandas as pd
@@ -15,15 +14,17 @@ import os
 
 warnings.filterwarnings('ignore')
 
+app = Flask(__name__)
+
 # Load the ImageNet labels from the JSON file
 with open("imagenet-simple-labels.json", 'r') as file:
     imagenet_labels = json.load(file)
 
-# Load the pre-trained ResNet model
+# Load the pre-trained ResNet model globally
 model3 = models.resnet18(pretrained=True)
-model3.eval()  
+model3.eval() 
 
-# Define the transformation pipeline
+# Define the transformation pipeline globally
 preprocess = transforms.Compose([
     transforms.Resize(256),
     transforms.CenterCrop(224),
@@ -34,21 +35,20 @@ preprocess = transforms.Compose([
 def preprocess_image(image_path):
     image = Image.open(image_path).convert('RGB')
     image = preprocess(image)
-    image = image.unsqueeze(0)  
+    image = image.unsqueeze(0) 
     return image
 
 def predict_pest(image_path):
+    # Use the globally defined preprocess function and model3
     image = preprocess_image(image_path)
 
-    # Perform inference
+    # Perform inference using the pre-loaded model
     with torch.no_grad():
         outputs = model3(image)
 
     # Get the predicted class
     _, predicted = torch.max(outputs, 1)
     return predicted.item()
-
-app = Flask(__name__)
 
 @app.route('/')
 def home():
@@ -152,7 +152,7 @@ def upload_image():
         file_path = os.path.join('uploads', file.filename)
         file.save(file_path)
 
-        # Make a prediction
+        # Make a prediction using the pre-loaded model and processed image
         predicted_class = predict_pest(file_path)
         predicted_label = imagenet_labels[predicted_class - 1]
 
