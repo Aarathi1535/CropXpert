@@ -1,4 +1,9 @@
 ﻿# Crop-Recommendation-System-App
+ 
+<div style="background-image: url('(https://github.com/Aarathi1535/Crop-Recommendation-System-App/blob/main/crop-recommend.png)'); height: 400px; width: 100%; display: flex; align-items: center; justify-content: center; text-align: center; color: white; font-size: 2em; background-size: cover;">
+    <p>Your overlay text goes here</p>
+</div>
+
 This project is a culmination of machine learning, frontend, backend and database integration.
 The crop recommendation app is made to ease the farmers dilemma for crop cultivation. Generally, the choice of a crop is decided by the nitrogen, phosphorus, potassium content along with some crucial factors like temperature, humidity and rainfall(usually measured in mm). 
 Using these inputs, the output of what crop should be grown will be predicted.
