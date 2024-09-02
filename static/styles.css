@@ -233,12 +233,12 @@ h1, h2 {
 }
 
 #showcase {
-    background-color: #fff;
     padding: 20px;
     margin: 20px auto;
     border-radius: 8px;
     max-width: 800px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-image: url("crop-recommend.png");
 }
 
 #showcase p {
