@@ -1,6 +1,6 @@
 ﻿# Crop-Recommendation-System-App
  
-<div style="background-image: url('(https://github.com/Aarathi1535/Crop-Recommendation-System-App/blob/main/crop-recommend.png)'); height: 400px; width: 100%; display: flex; align-items: center; justify-content: center; text-align: center; color: white; font-size: 2em; background-size: cover;">
+<div style="background-image: url('[(https://github.com/Aarathi1535/Crop-Recommendation-System-App/blob/main/crop-recommend.png)](https://raw.githubusercontent.com/Aarathi1535/Crop-Recommendation-System-App/main/crop-recommend.png)'); height: 400px; width: 100%; display: flex; align-items: center; justify-content: center; text-align: center; color: white; font-size: 2em; background-size: cover;">
 </div>
 
 This project is a culmination of machine learning, frontend, backend and database integration.
