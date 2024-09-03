@@ -68,7 +68,6 @@ nav ul li a {
     display: none;
     padding: 20px;
     background: #f4f4f4;
-    background-image: url("crop-recommend.png")
 }
 
 .tab-content.active {
