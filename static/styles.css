@@ -227,7 +227,11 @@ footer {
     bottom: 0;
 }
 
-h1, h2 {
+h1{
+    color: #89c28b;
+    font-weight: bold;
+}
+h2 {
     color: #4CAF50;
     font-weight: bold;
 }
