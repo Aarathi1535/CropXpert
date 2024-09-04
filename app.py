@@ -14,7 +14,7 @@ import json
 import os
 
 warnings.filterwarnings('ignore')
-
+'''
 # Load the ImageNet labels from the JSON file
 with open("imagenet-simple-labels.json", 'r') as file:
     imagenet_labels = json.load(file)
@@ -47,7 +47,7 @@ def predict_pest(image_path):
     # Get the predicted class
     _, predicted = torch.max(outputs, 1)
     return predicted.item()
-
+'''
 app = Flask(__name__)
 
 @app.route('/')
@@ -136,7 +136,7 @@ def result2():
         f"The best Fertilizer that suits your inputs is: <strong>{prediction[0]}</strong>"
     )
     return render_template('result2.html', result=result)
-
+'''
 # Image Upload and Prediction Section
 @app.route('/upload_image', methods=['POST'])
 def upload_image():
@@ -160,8 +160,8 @@ def upload_image():
         return render_template('pest_detection.html', label=predicted_label)
 
     return render_template('index.html')
-
+'''
 # Ensure the uploads directory exists
 if __name__ == '__main__':
-    os.makedirs('uploads', exist_ok=True)
+    #os.makedirs('uploads', exist_ok=True)
     app.run(debug=True)
