@@ -15,7 +15,7 @@ import os
 warnings.filterwarnings('ignore')
 
 app = Flask(__name__)
-
+'''
 # Load the ImageNet labels from the JSON file
 with open("imagenet-simple-labels.json", 'r') as file:
     imagenet_labels = json.load(file)
@@ -49,7 +49,7 @@ def predict_pest(image_path):
     # Get the predicted class
     _, predicted = torch.max(outputs, 1)
     return predicted.item()
-
+'''
 @app.route('/')
 def home():
     return render_template('index.html')
