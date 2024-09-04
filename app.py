@@ -15,9 +15,9 @@ from PIL import Image
 import json
 import cv2
 import numpy as np
-import tensorflow as tf
-from tensorflow import keras
-from keras.models import load_model
+#import tensorflow as tf
+#from tensorflow import keras
+#from keras.models import load_model
 from matplotlib import pyplot as plt
 import os
 
