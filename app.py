@@ -1,4 +1,7 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, session, flash
+#from flask_sqlalchemy import SQLAlchemy
+from werkzeug.security import generate_password_hash, check_password_hash
+import sqlite3
 from sklearn import tree
 from sklearn.ensemble import RandomForestClassifier
 import pandas as pd
@@ -10,49 +13,86 @@ import torchvision.transforms as transforms
 from torchvision import models
 from PIL import Image
 import json
+import cv2
+import numpy as np
+import tensorflow as tf
+from tensorflow import keras
+from keras.models import load_model
+from matplotlib import pyplot as plt
 import os
 
 warnings.filterwarnings('ignore')
 
 app = Flask(__name__)
-'''
-# Load the ImageNet labels from the JSON file
-with open("imagenet-simple-labels.json", 'r') as file:
-    imagenet_labels = json.load(file)
+app.secret_key = 'Aarathi@1535'
 
-# Load the pre-trained ResNet model globally
-model3 = models.resnet18(pretrained=True)
-model3.eval() 
+# Database setup (e.g., SQLite)
+def init_db():
+    conn = sqlite3.connect('users.db')
+    c = conn.cursor()
+    c.execute('''CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY, 
+               name TEXT, email TEXT UNIQUE, password TEXT)''')
+    conn.commit()
+    conn.close()
 
-# Define the transformation pipeline globally
-preprocess = transforms.Compose([
-    transforms.Resize(256),
-    transforms.CenterCrop(224),
-    transforms.ToTensor(),
-    transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
-])
+def execute_query(query, args=()):
+    conn = sqlite3.connect('users.db')
+    c = conn.cursor()
+    c.execute(query, args)
+    conn.commit()
+    conn.close()
 
-def preprocess_image(image_path):
-    image = Image.open(image_path).convert('RGB')
-    image = preprocess(image)
-    image = image.unsqueeze(0) 
-    return image
+@app.route('/signup', methods=['GET', 'POST'])
+def signup():
+    if request.method == 'POST':
+        name = request.form['name']
+        email = request.form['email']
+        password = generate_password_hash(request.form['password'], method='pbkdf2:sha256')
 
-def predict_pest(image_path):
-    # Use the globally defined preprocess function and model3
-    image = preprocess_image(image_path)
+        query = "INSERT INTO users (name, email, password) VALUES (?, ?, ?)"
+        try:
+            execute_query(query, (name, email, password))
+            flash('You have successfully signed up! Please log in.', 'success')
+            return redirect(url_for('login'))
+        except sqlite3.IntegrityError:
+            flash('User with this email already exists.', 'danger')
+    return render_template('signup.html')
 
-    # Perform inference using the pre-loaded model
-    with torch.no_grad():
-        outputs = model3(image)
 
-    # Get the predicted class
-    _, predicted = torch.max(outputs, 1)
-    return predicted.item()
-'''
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['password']
+
+        conn = sqlite3.connect('users.db')
+        c = conn.cursor()
+        c.execute("SELECT * FROM users WHERE email = ?", (email,))
+        user = c.fetchone()
+        conn.close()
+
+        if user and check_password_hash(user[3], password):
+            session['user_id'] = user[0]
+            session['user_name'] = user[1]
+            print("Login successful, redirecting to home")
+            return redirect(url_for('home'))
+        else:
+            flash('Login Unsuccessful. Please check your email and password', 'danger')
+    return render_template('login.html')
+
+
+@app.route('/logout')
+def logout():
+    session.clear()
+    flash('You have successfully logged out.', 'info')
+    return redirect(url_for('login'))
+
 @app.route('/')
 def home():
-    return render_template('index.html')
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+    return render_template('index.html', user_name=session.get('user_name'))
+
 
 @app.route('/details')
 def details():
@@ -136,7 +176,7 @@ def result2():
         f"The best Fertilizer that suits your inputs is: <strong>{prediction[0]}</strong>"
     )
     return render_template('result2.html', result=result)
-
+'''
 # Image Upload and Prediction Section
 @app.route('/upload_image', methods=['POST'])
 def upload_image():
@@ -152,7 +192,7 @@ def upload_image():
         file_path = os.path.join('uploads', file.filename)
         file.save(file_path)
 
-        # Make a prediction using the pre-loaded model and processed image
+        # Make a prediction
         predicted_class = predict_pest(file_path)
         predicted_label = imagenet_labels[predicted_class - 1]
 
@@ -160,8 +200,67 @@ def upload_image():
         return render_template('pest_detection.html', label=predicted_label)
 
     return render_template('index.html')
+'''
+app.config['UPLOAD_FOLDER'] = os.path.join('static', 'uploads')
+
+# Load the trained model
+model = load_model('pest_detection_model.h5')
+
+# Define a mapping from class indices to pest names
+class_index_to_name = {
+    0: "Aphids",
+    1: "Armyworm",
+    2: "Beetle",
+    3: "Bollworm",
+    4: "Grasshopper",
+    5: "Mites",
+    6: "Mosquito",
+    7: "Sawfly",
+    8: "Stem borer"
+}
+
+# Function to get the image path of the pest (update as needed)
+def get_pest_image_path(pest_name):
+    base_dir = r"C:\\Users\\AARATHISREE\\Desktop\\Jupyter Notebook Projects\\Pest_datasets\\pest\\train"
+    pest_dir = os.path.join(base_dir, pest_name)
+    return os.path.join(pest_dir, f'{pest_name}_jpg_0.jpg')
+
+# Function to predict the pest
+def predict_pest(image_path):
+    img_size = 128
+    img = cv2.imread(image_path)
+    img = cv2.resize(img, (img_size, img_size))
+    img = img.astype('float32') / 255.0  # Normalize image
+    img = np.expand_dims(img, axis=0)  # Add batch dimension
+
+    prediction = model.predict(img)
+    predicted_class = np.argmax(prediction)
+    pest_name = class_index_to_name.get(predicted_class, "Unknown")
+
+    pest_image_path = get_pest_image_path(pest_name)
+    return pest_name, pest_image_path
+
+@app.route('/upload_image', methods=['POST'])
+def upload_image():
+    if 'file' not in request.files:
+        return redirect(request.url)
+    file = request.files['file']
+    if file.filename == '':
+        return redirect(request.url)
+
+    if file:
+        # Save the uploaded file
+        file_path = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
+        file.save(file_path)
+
+        # Predict the pest
+        pest_name, pest_image_path = predict_pest(file_path)
+
+        return render_template('pest_detection.html', pest_name=pest_name, pest_image_path=pest_image_path, uploaded_image=file.filename)
+    
 
 # Ensure the uploads directory exists
 if __name__ == '__main__':
+    init_db()
     os.makedirs('uploads', exist_ok=True)
     app.run(debug=True)
