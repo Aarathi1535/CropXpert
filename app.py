@@ -200,7 +200,7 @@ def upload_image():
         return render_template('pest_detection.html', label=predicted_label)
 
     return render_template('index.html')
-'''
+
 app.config['UPLOAD_FOLDER'] = os.path.join('static', 'uploads')
 
 # Load the trained model
@@ -258,7 +258,7 @@ def upload_image():
 
         return render_template('pest_detection.html', pest_name=pest_name, pest_image_path=pest_image_path, uploaded_image=file.filename)
     
-
+'''
 # Ensure the uploads directory exists
 if __name__ == '__main__':
     init_db()
