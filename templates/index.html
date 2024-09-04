@@ -8,13 +8,15 @@
 </head>
 <body>
     <header>
-        <div class = "logo">
+        <div class="logo">
             <img src="{{ url_for('static', filename='logo-image.jpg') }}" alt="logo">        
         </div>
         <div class="container">
             <div class="branding">
                 <p class="copyright">© 2024 Crop Recommendation System App by Aarathisree Balla. All rights reserved.</p>
                 <h1>AgriCure</h1>
+                <p>Welcome, {{ user_name }}!</p>
+                <a href="{{ url_for('logout') }}">Logout</a>
             </div>
         </div>
             <nav>
@@ -474,7 +476,7 @@
                     <h1>Upload an Image for Pest Detection</h1>
                     <p>Upload an image of a pest to identify it and get recommendations.</p>
                 </section>
-                <section id="input-form">
+                <section id="input-form"><!--
                     <h2>Select an image to detect the pest:</h2>
                     <form method="POST" action="{{ url_for('upload_image') }}" enctype="multipart/form-data">
                         <div class="form-group">
@@ -482,6 +484,11 @@
                             <input type="file" id="file" name="file" accept="image/*" required>
                         </div>
                         <input type="submit" value="Detect Pest">
+                    </form>-->
+                    <h1>Pest Detection</h1>
+                    <form action="{{ url_for('upload_image') }}" method="POST" enctype="multipart/form-data">
+                        <input type="file" name="file" required>
+                        <button type="submit">Upload and Predict</button>
                     </form>
                 </section>
             </section>
