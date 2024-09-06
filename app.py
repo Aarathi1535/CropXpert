@@ -1,5 +1,7 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, session, flash
 #from flask_sqlalchemy import SQLAlchemy
+from werkzeug.security import generate_password_hash, check_password_hash
+import sqlite3
 from sklearn import tree
 from sklearn.ensemble import RandomForestClassifier
 import pandas as pd
@@ -14,45 +16,76 @@ import json
 import os
 
 warnings.filterwarnings('ignore')
-'''
-# Load the ImageNet labels from the JSON file
-with open("imagenet-simple-labels.json", 'r') as file:
-    imagenet_labels = json.load(file)
 
-# Load the pre-trained ResNet model
-model3 = models.resnet50(pretrained=True)
-model3.eval()  # Set the model to evaluation mode
-
-# Define the transformation pipeline
-preprocess = transforms.Compose([
-    transforms.Resize(256),
-    transforms.CenterCrop(224),
-    transforms.ToTensor(),
-    transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
-])
-
-def preprocess_image(image_path):
-    image = Image.open(image_path).convert('RGB')
-    image = preprocess(image)
-    image = image.unsqueeze(0)  # Add batch dimension
-    return image
-
-def predict_pest(image_path):
-    image = preprocess_image(image_path)
-
-    # Perform inference
-    with torch.no_grad():
-        outputs = model3(image)
-
-    # Get the predicted class
-    _, predicted = torch.max(outputs, 1)
-    return predicted.item()
-'''
 app = Flask(__name__)
+app.secret_key = 'Aarathi@1535'
+
+# Database setup (e.g., SQLite)
+def init_db():
+    conn = sqlite3.connect('users.db')
+    c = conn.cursor()
+    c.execute('''CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY, 
+               name TEXT, email TEXT UNIQUE, password TEXT)''')
+    conn.commit()
+    conn.close()
+
+def execute_query(query, args=()):
+    conn = sqlite3.connect('users.db')
+    c = conn.cursor()
+    c.execute(query, args)
+    conn.commit()
+    conn.close()
+
+@app.route('/signup', methods=['GET', 'POST'])
+def signup():
+    if request.method == 'POST':
+        name = request.form['name']
+        email = request.form['email']
+        password = generate_password_hash(request.form['password'], method='pbkdf2:sha256')
+
+        query = "INSERT INTO users (name, email, password) VALUES (?, ?, ?)"
+        try:
+            execute_query(query, (name, email, password))
+            flash('You have successfully signed up! Please log in.', 'success')
+            return redirect(url_for('login'))
+        except sqlite3.IntegrityError:
+            flash('User with this email already exists.', 'danger')
+    return render_template('signup.html')
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['password']
+
+        conn = sqlite3.connect('users.db')
+        c = conn.cursor()
+        c.execute("SELECT * FROM users WHERE email = ?", (email,))
+        user = c.fetchone()
+        conn.close()
+
+        if user and check_password_hash(user[3], password):
+            session['user_id'] = user[0]
+            session['user_name'] = user[1]
+            print("Login successful, redirecting to home")
+            return redirect(url_for('home'))
+        else:
+            flash('Login Unsuccessful. Please check your email and password', 'danger')
+    return render_template('login.html')
+
+@app.route('/logout')
+def logout():
+    session.clear()
+    flash('You have successfully logged out.', 'info')
+    return redirect(url_for('login'))
 
 @app.route('/')
 def home():
-    return render_template('index.html')
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+    return render_template('index.html', user_name=session.get('user_name'))
+
 
 @app.route('/details')
 def details():
@@ -136,7 +169,40 @@ def result2():
         f"The best Fertilizer that suits your inputs is: <strong>{prediction[0]}</strong>"
     )
     return render_template('result2.html', result=result)
-'''
+
+# Load the ImageNet labels from the JSON file
+with open("imagenet-simple-labels.json", 'r') as file:
+    imagenet_labels = json.load(file)
+
+# Load the pre-trained ResNet model
+model3 = models.resnet50(pretrained=True)
+model3.eval()  # Set the model to evaluation mode
+
+# Define the transformation pipeline
+preprocess = transforms.Compose([
+    transforms.Resize(256),
+    transforms.CenterCrop(224),
+    transforms.ToTensor(),
+    transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+])
+
+def preprocess_image(image_path):
+    image = Image.open(image_path).convert('RGB')
+    image = preprocess(image)
+    image = image.unsqueeze(0)  # Add batch dimension
+    return image
+
+def predict_pest(image_path):
+    image = preprocess_image(image_path)
+
+    # Perform inference
+    with torch.no_grad():
+        outputs = model3(image)
+
+    # Get the predicted class
+    _, predicted = torch.max(outputs, 1)
+    return predicted.item()
+
 # Image Upload and Prediction Section
 @app.route('/upload_image', methods=['POST'])
 def upload_image():
@@ -160,8 +226,9 @@ def upload_image():
         return render_template('pest_detection.html', label=predicted_label)
 
     return render_template('index.html')
-'''
+
 # Ensure the uploads directory exists
 if __name__ == '__main__':
-    #os.makedirs('uploads', exist_ok=True)
+    init_db()
+    os.makedirs('uploads', exist_ok=True)
     app.run(debug=True)
