@@ -22,11 +22,11 @@ app.secret_key = 'Aarathi@1535'
 # Database setup for PostgreSQL
 def get_db_connection():
     return psycopg2.connect(
-        host='dpg-crd8vtrqf0us73audpq0-a',     
-        database='login_users',    
-        user='login_users_user',  
-        password='orTcnmuofmPWPqtYOWyiRI18mXrW8f0k',  
-        port='5432'       
+        host=os.getenv('POSTGRES_HOST'),
+        database=os.getenv('POSTGRES_DB'),
+        user=os.getenv('POSTGRES_USER'),
+        password=os.getenv('POSTGRES_PASSWORD'),
+        port=os.getenv('POSTGRES_PORT', 5432)
     )
 
 # Create a table if it doesn't exist
