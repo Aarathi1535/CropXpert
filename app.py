@@ -13,6 +13,9 @@ from torchvision import models
 from PIL import Image
 import json
 import os
+from dotenv import load_dotenv
+load_dotenv()  # This will load environment variables from .env file
+
 
 warnings.filterwarnings('ignore')
 
