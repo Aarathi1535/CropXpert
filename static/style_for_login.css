@@ -9,7 +9,7 @@ body {
     display: flex;
     flex-direction: column;
     height: 100vh;
-    background-image: url("crop-recommend.jpg");
+    background-image: url("crop-recommend.png");
     background-size: contain;
     background-position:20%;
 
