@@ -1,9 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AgriCure</title>
+    <title>Crop Recommendation System</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
@@ -15,6 +16,8 @@
             <div class="branding">
                 <p class="copyright">© 2024 Crop Recommendation System App by Aarathisree Balla. All rights reserved.</p>
                 <h1>AgriCure</h1>
+                <p>Welcome, {{ user_name }}!</p>
+                <a href="{{ url_for('logout') }}">Logout</a>
             </div>
         </div>
             <nav>
