@@ -14,8 +14,8 @@ from PIL import Image
 import json
 import os
 from dotenv import load_dotenv
-load_dotenv()  # This will load environment variables from .env file
 
+load_dotenv()  # This will load environment variables from .env file
 
 warnings.filterwarnings('ignore')
 
@@ -24,45 +24,67 @@ app.secret_key = 'Aarathi@1535'
 
 # Database setup for PostgreSQL
 def get_db_connection():
-    app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
-    return app.config['SQLALCHEMY_DATABASE_URI']
+    try:
+        conn = psycopg2.connect(os.getenv('DATABASE_URL'))  # Establish a connection to the database
+        return conn
+    except Exception as e:
+        print(f"Database connection error: {e}")
+        return None
 
 # Create a table if it doesn't exist
 def init_db():
     conn = get_db_connection()
-    cursor = conn.cursor()
-    cursor.execute('''CREATE TABLE IF NOT EXISTS users (
-                        id SERIAL PRIMARY KEY,
-                        name VARCHAR(100),
-                        email VARCHAR(100) UNIQUE,
-                        password VARCHAR(255))''')
-    conn.commit()
-    cursor.close()
-    conn.close()
+    if conn:
+        cursor = conn.cursor()
+        cursor.execute('''CREATE TABLE IF NOT EXISTS users (
+                            id SERIAL PRIMARY KEY,
+                            name VARCHAR(100),
+                            email VARCHAR(100) UNIQUE,
+                            password VARCHAR(255))''')
+        conn.commit()
+        cursor.close()
+        conn.close()
+    else:
+        print("Failed to initialize database. No connection.")
 
-# Execute a query
+# Execute a query with error handling
 def execute_query(query, args=()):
-    conn = get_db_connection()
-    cursor = conn.cursor()
-    cursor.execute(query, args)
-    conn.commit()
-    cursor.close()
-    conn.close()
+    try:
+        conn = get_db_connection()
+        if conn:
+            cursor = conn.cursor()
+            cursor.execute(query, args)
+            conn.commit()
+            cursor.close()
+            conn.close()
+        else:
+            print("No connection for executing query.")
+    except Exception as e:
+        print(f"Error executing query: {e}")
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     if request.method == 'POST':
         name = request.form['name']
         email = request.form['email']
-        password = generate_password_hash(request.form['password'], method='pbkdf2:sha256')
+        password = request.form['password']
+
+        # Simple validation
+        if not name or not email or not password:
+            flash('Please fill out all fields', 'danger')
+            return render_template('signup.html')
+
+        hashed_password = generate_password_hash(password, method='pbkdf2:sha256')
 
         query = "INSERT INTO users (name, email, password) VALUES (%s, %s, %s)"
         try:
-            execute_query(query, (name, email, password))
+            execute_query(query, (name, email, hashed_password))
             flash('You have successfully signed up! Please log in.', 'success')
             return redirect(url_for('login'))
         except psycopg2.IntegrityError:
             flash('User with this email already exists.', 'danger')
+        except Exception as e:
+            flash(f"An error occurred: {e}", 'danger')
     return render_template('signup.html')
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -72,19 +94,21 @@ def login():
         password = request.form['password']
 
         conn = get_db_connection()
-        cursor = conn.cursor()
-        cursor.execute("SELECT * FROM users WHERE email = %s", (email,))
-        user = cursor.fetchone()
-        cursor.close()
-        conn.close()
+        if conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM users WHERE email = %s", (email,))
+            user = cursor.fetchone()
+            cursor.close()
+            conn.close()
 
-        if user and check_password_hash(user[3], password):
-            session['user_id'] = user[0]
-            session['user_name'] = user[1]
-            print("Login successful, redirecting to home")
-            return redirect(url_for('home'))
+            if user and check_password_hash(user[3], password):
+                session['user_id'] = user[0]
+                session['user_name'] = user[1]
+                return redirect(url_for('home'))
+            else:
+                flash('Login Unsuccessful. Please check your email and password', 'danger')
         else:
-            flash('Login Unsuccessful. Please check your email and password', 'danger')
+            flash('Database connection failed', 'danger')
     return render_template('login.html')
 
 @app.route('/logout')
@@ -98,7 +122,6 @@ def home():
     if 'user_id' not in session:
         return redirect(url_for('login'))
     return render_template('index.html', user_name=session.get('user_name'))
-
 
 @app.route('/details')
 def details():
