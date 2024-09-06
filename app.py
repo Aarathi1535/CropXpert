@@ -96,20 +96,34 @@ def login():
         conn = get_db_connection()
         if conn:
             cursor = conn.cursor()
-            cursor.execute("SELECT * FROM users WHERE email = %s", (email,))
-            user = cursor.fetchone()
-            cursor.close()
-            conn.close()
+            try:
+                cursor.execute("SELECT * FROM users WHERE email = %s", (email,))
+                user = cursor.fetchone()
+                cursor.close()
+                conn.close()
 
-            if user and check_password_hash(user[3], password):
-                session['user_id'] = user[0]
-                session['user_name'] = user[1]
-                return redirect(url_for('home'))
-            else:
-                flash('Login Unsuccessful. Please check your email and password', 'danger')
+                if user:
+                    # Check if password matches
+                    if check_password_hash(user[3], password):
+                        session['user_id'] = user[0]
+                        session['user_name'] = user[1]
+                        flash('Login successful!', 'success')
+                        return redirect(url_for('home'))
+                    else:
+                        flash('Invalid password. Please try again.', 'danger')
+                        return render_template('login.html')
+                else:
+                    flash('No user found with that email.', 'danger')
+                    return render_template('login.html')
+            except Exception as e:
+                flash(f"An error occurred during login: {str(e)}", 'danger')
+                return render_template('login.html')
         else:
             flash('Database connection failed', 'danger')
+            return render_template('login.html')
+
     return render_template('login.html')
+
 
 @app.route('/logout')
 def logout():
