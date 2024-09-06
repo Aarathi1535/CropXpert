@@ -11,6 +11,9 @@ body {
     align-items: center;
     height: 100vh;
     background-color: #f0f2f5;
+    background-image: url("crop-recommend.png");
+    background-size: cover;
+
 }
 
 .container {
