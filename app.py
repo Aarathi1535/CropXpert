@@ -1,7 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash
-#from flask_sqlalchemy import SQLAlchemy
+import psycopg2
 from werkzeug.security import generate_password_hash, check_password_hash
-import sqlite3
 from sklearn import tree
 from sklearn.ensemble import RandomForestClassifier
 import pandas as pd
@@ -20,23 +19,36 @@ warnings.filterwarnings('ignore')
 app = Flask(__name__)
 app.secret_key = 'Aarathi@1535'
 
-# Database setup (SQLite)
+# Database setup for PostgreSQL
+def get_db_connection():
+    return psycopg2.connect(
+        host='dpg-crd8vtrqf0us73audpq0-a',      # Use Render's PostgreSQL host
+        database='login_users',    # Your PostgreSQL database name
+        user='login_users_user',  # Your PostgreSQL username
+        password='orTcnmuofmPWPqtYOWyiRI18mXrW8f0k',  # Your PostgreSQL password
+        port='5432'       # Default port is usually 5432
+    )
+
+# Create a table if it doesn't exist
 def init_db():
-    conn = sqlite3.connect('users.db')
-    c = conn.cursor()
-    c.execute('''CREATE TABLE IF NOT EXISTS users (
-                 id INTEGER PRIMARY KEY, 
-                 name TEXT, 
-                 email TEXT UNIQUE, 
-                 password TEXT)''')
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute('''CREATE TABLE IF NOT EXISTS users (
+                        id SERIAL PRIMARY KEY,
+                        name VARCHAR(100),
+                        email VARCHAR(100) UNIQUE,
+                        password VARCHAR(255))''')
     conn.commit()
+    cursor.close()
     conn.close()
 
+# Execute a query
 def execute_query(query, args=()):
-    conn = sqlite3.connect('users.db')
-    c = conn.cursor()
-    c.execute(query, args)
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute(query, args)
     conn.commit()
+    cursor.close()
     conn.close()
 
 @app.route('/signup', methods=['GET', 'POST'])
@@ -46,15 +58,14 @@ def signup():
         email = request.form['email']
         password = generate_password_hash(request.form['password'], method='pbkdf2:sha256')
 
-        query = "INSERT INTO users (name, email, password) VALUES (?, ?, ?)"
+        query = "INSERT INTO users (name, email, password) VALUES (%s, %s, %s)"
         try:
             execute_query(query, (name, email, password))
             flash('You have successfully signed up! Please log in.', 'success')
             return redirect(url_for('login'))
-        except sqlite3.IntegrityError:
+        except psycopg2.IntegrityError:
             flash('User with this email already exists.', 'danger')
     return render_template('signup.html')
-
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -62,10 +73,11 @@ def login():
         email = request.form['email']
         password = request.form['password']
 
-        conn = sqlite3.connect('users.db')
-        c = conn.cursor()
-        c.execute("SELECT * FROM users WHERE email = ?", (email,))
-        user = c.fetchone()
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM users WHERE email = %s", (email,))
+        user = cursor.fetchone()
+        cursor.close()
         conn.close()
 
         if user and check_password_hash(user[3], password):
