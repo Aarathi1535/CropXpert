@@ -18,4 +18,7 @@ The Flask application was deployed on render.com:
 1. Build Command: `$pip install -r requirements.txt`
 2. Start Command: `$gunicorn -b :$PORT app:app`
 
+**Report on Crop Recommendation System is:**
+
+
 **Here is the link for the website**: [https://crop-recommendation-system-app.onrender.com](https://crop-recommendation-system-app.onrender.com)
