@@ -24,7 +24,7 @@ app.secret_key = 'Aarathi@1535'
 
 # Database setup for PostgreSQL
 def get_db_connection():
-    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
     return app.config['SQLALCHEMY_DATABASE_URI']
 
 # Create a table if it doesn't exist
