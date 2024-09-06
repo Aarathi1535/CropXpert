@@ -22,11 +22,11 @@ app.secret_key = 'Aarathi@1535'
 # Database setup for PostgreSQL
 def get_db_connection():
     return psycopg2.connect(
-        host='dpg-crd8vtrqf0us73audpq0-a',      # Use Render's PostgreSQL host
-        database='login_users',    # Your PostgreSQL database name
-        user='login_users_user',  # Your PostgreSQL username
-        password='orTcnmuofmPWPqtYOWyiRI18mXrW8f0k',  # Your PostgreSQL password
-        port='5432'       # Default port is usually 5432
+        host='dpg-crd8vtrqf0us73audpq0-a',     
+        database='login_users',    
+        user='login_users_user',  
+        password='orTcnmuofmPWPqtYOWyiRI18mXrW8f0k',  
+        port='5432'       
     )
 
 # Create a table if it doesn't exist
@@ -190,7 +190,7 @@ with open("imagenet-simple-labels.json", 'r') as file:
     imagenet_labels = json.load(file)
 
 # Load the pre-trained ResNet model
-model3 = models.resnet50(pretrained=True)
+model3 = models.resnet18(pretrained=True)
 model3.eval()  # Set the model to evaluation mode
 
 # Define the transformation pipeline
