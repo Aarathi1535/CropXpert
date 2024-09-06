@@ -20,12 +20,15 @@ warnings.filterwarnings('ignore')
 app = Flask(__name__)
 app.secret_key = 'Aarathi@1535'
 
-# Database setup (e.g., SQLite)
+# Database setup (SQLite)
 def init_db():
     conn = sqlite3.connect('users.db')
     c = conn.cursor()
-    c.execute('''CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY, 
-               name TEXT, email TEXT UNIQUE, password TEXT)''')
+    c.execute('''CREATE TABLE IF NOT EXISTS users (
+                 id INTEGER PRIMARY KEY, 
+                 name TEXT, 
+                 email TEXT UNIQUE, 
+                 password TEXT)''')
     conn.commit()
     conn.close()
 
@@ -229,6 +232,6 @@ def upload_image():
 
 # Ensure the uploads directory exists
 if __name__ == '__main__':
-    init_db()
+    init_db()  # Initialize the database when the app starts
     os.makedirs('uploads', exist_ok=True)
     app.run(debug=True)
