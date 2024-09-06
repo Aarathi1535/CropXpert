@@ -24,13 +24,7 @@ app.secret_key = 'Aarathi@1535'
 
 # Database setup for PostgreSQL
 def get_db_connection():
-    return psycopg2.connect(
-        host=os.getenv('POSTGRES_HOST'),
-        database=os.getenv('POSTGRES_DB'),
-        user=os.getenv('POSTGRES_USER'),
-        password=os.getenv('POSTGRES_PASSWORD'),
-        port=os.getenv('POSTGRES_PORT', 5432)
-    )
+    return app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
 
 # Create a table if it doesn't exist
 def init_db():
