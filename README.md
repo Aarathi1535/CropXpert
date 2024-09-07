@@ -1,4 +1,4 @@
-# Crop-Recommendation-System-App
+# Crop-Recommendation-System-App - AgriCure
 
 ![Crop Recommendation](/static/crop-recommend.png)
 
