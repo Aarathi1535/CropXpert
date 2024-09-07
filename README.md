@@ -1,6 +1,6 @@
 # Crop-Recommendation-System-App - AgriCure
 
-![Crop Recommendation](/static/crop-recommend.png)
+![Crop Recommendation](/static/crop-recommend.jpg)
 
 This project is a culmination of machine learning, frontend, backend, and database integration. The crop recommendation app is made to ease the farmers' dilemma for crop cultivation. Generally, the choice of a crop is decided by the nitrogen, phosphorus, potassium content along with some crucial factors like temperature, humidity, and rainfall (usually measured in mm). Using these inputs, the output of what crop should be grown will be predicted. Along with this, the project also recommends users with the best fertilizer based on the nitrogen, phosphorus, potassium contents, and temperature, moisture, humidity, soil type, and crop type. The user-friendly interface helps users to interact with the website and get recommended with the worthy crop and fertilizer.
 
