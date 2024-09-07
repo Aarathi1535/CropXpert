@@ -1,6 +1,6 @@
 # Crop-Recommendation-System-App
 
-![Crop Recommendation](crop-recommend.png)
+![Crop Recommendation](/static/crop-recommend.png)
 
 This project is a culmination of machine learning, frontend, backend, and database integration. The crop recommendation app is made to ease the farmers' dilemma for crop cultivation. Generally, the choice of a crop is decided by the nitrogen, phosphorus, potassium content along with some crucial factors like temperature, humidity, and rainfall (usually measured in mm). Using these inputs, the output of what crop should be grown will be predicted. Along with this, the project also recommends users with the best fertilizer based on the nitrogen, phosphorus, potassium contents, and temperature, moisture, humidity, soil type, and crop type. The user-friendly interface helps users to interact with the website and get recommended with the worthy crop and fertilizer.
 
@@ -10,7 +10,7 @@ This project is a culmination of machine learning, frontend, backend, and databa
 3. Python
 4. Flask
 5. HTML, CSS, and JavaScript - Frontend Website
-6. MySQL - Database Integration
+6. PostgreSQL - Database Integration
 7. Confusion Matrix - To plot the comparison between predicted and tested values
 8. Libraries: SQLAlchemy, scikit-learn, seaborn, matplotlib, pandas, and flask
 
