@@ -3,27 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Register form</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="{{ url_for('static', filename='style_for_login.css') }}">
-    <title>AgriCure</title>
 </head>
+
 <body>
-    <header>
-        <div class="logo">
-            <img src="{{ url_for('static', filename='logo-image.jpg') }}" alt="logo">        
+    <div class="wrapper">
+        <span class="rotate-bg"></span>
+        <span class="rotate-bg2"></span>
+
+        <div class="form-box login">
+            <h2 class="title animation" style="--i:0; --j:21">Login</h2>
+            <form method="POST" action="{{ url_for('login') }}">
+                <div class="input-box animation" style="--i:1; --j:22">
+                    <input type="text" name="email" required>
+                    <label for="">Username</label>
+                    <i class='bx bxs-user'></i>
+                </div>
+                <div class="input-box animation" style="--i:2; --j:23">
+                    <input type="password" name="password" required>
+                    <label for="">Password</label>
+                    <i class='bx bxs-lock-alt'></i>
+                </div>
+                <button type="submit" class="btn animation" style="--i:3; --j:24">Login</button>
+                <div class="linkTxt animation" style="--i:5; --j:25">
+                    <p>Don't have an account? <a href="{{ url_for('signup') }}" class="register-link">Sign Up</a></p>
+                </div>
+            </form>
         </div>
-            <div class="branding">
-                <p class="copyright">© 2024 Team Smart Spark</p>
-                <h1>AgriCure</h1>
-            </div>
-    </header>
-    <div class="container">
-        <form class="form" id="login-form" method="POST" action="{{ url_for('login') }}">
-            <h2>Login</h2>
-            <input type="email" name="email" placeholder="Email" required>
-            <input type="password" name="password" placeholder="Password" required>
-            <button type="submit">Login</button>
-            <p class="redirect">Don't have an account? <a href="{{ url_for('signup') }}">Sign Up</a></p>
-        </form>
+
+        <div class="info-text login">
+            <h2 class="animation" style="--i:0; --j:20">Welcome Back!</h2>
+            <p class="animation" style="--i:1; --j:21">Welcome to AgriCure! Let's cultivate success together with tailored crop recommendations just for you!</p>
+        </div>
     </div>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>
