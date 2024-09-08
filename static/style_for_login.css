@@ -11,9 +11,8 @@ body {
     height: 100vh;
     background-image: url("login-background.jpg");
     background-size: contain;
-    background-position:20%;
-
-
+    background-attachment: fixed;
+    background-position: 5%;
 }
 
 header {
@@ -27,12 +26,12 @@ header {
 .logo {
     position: absolute;
     top: 10px;
-    left: 10px;
+    left: 40px;
 }
 
 .logo img {
-    height: 80px;
-    width: 80px;
+    height: 90px;
+    width: 100px;
     border-radius: 50%;
     object-fit: cover;
     border: 2px solid white;
