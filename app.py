@@ -14,23 +14,22 @@ from PIL import Image
 import json
 import os
 from dotenv import load_dotenv
-load_dotenv()  # This will load environment variables from .env file
+load_dotenv()  
 
 warnings.filterwarnings('ignore')
 
 app = Flask(__name__)
-app.secret_key = os.getenv('SECRET_KEY')  # Securely store the secret key in .env
+app.secret_key = os.getenv('SECRET_KEY') 
 
 # Database setup for PostgreSQL
 def get_db_connection():
     try:
-        conn = psycopg2.connect(os.getenv('DATABASE_URL'))  # Ensure DATABASE_URL is set in .env
+        conn = psycopg2.connect(os.getenv('DATABASE_URL')) 
         return conn
     except Exception as e:
         print(f"Error connecting to the database: {e}")
         return None
 
-# Create a table if it doesn't exist
 def init_db():
     conn = get_db_connection()
     if conn is None:
@@ -61,13 +60,13 @@ def execute_query(query, args=()):
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     if request.method == 'POST':
-        name = request.form['name']
+        username = request.form['username']
         email = request.form['email']
         password = generate_password_hash(request.form['password'], method='pbkdf2:sha256')
 
         query = "INSERT INTO users (name, email, password) VALUES (%s, %s, %s)"
         try:
-            execute_query(query, (name, email, password))
+            execute_query(query, (username, email, password))
             flash('You have successfully signed up! Please log in.', 'success')
             return redirect(url_for('login'))
         except psycopg2.IntegrityError:
@@ -194,15 +193,11 @@ def result2():
     )
     return render_template('result2.html', result=result)
 
-# Load the ImageNet labels from the JSON file
 with open("imagenet-simple-labels.json", 'r') as file:
     imagenet_labels = json.load(file)
 
-# Load the pre-trained ResNet model
 model3 = models.resnet18(pretrained=True)
-model3.eval()  # Set the model to evaluation mode
-
-# Define the transformation pipeline
+model3.eval()  
 preprocess = transforms.Compose([
     transforms.Resize(256),
     transforms.CenterCrop(224),
@@ -213,21 +208,18 @@ preprocess = transforms.Compose([
 def preprocess_image(image_path):
     image = Image.open(image_path).convert('RGB')
     image = preprocess(image)
-    image = image.unsqueeze(0)  # Add batch dimension
+    image = image.unsqueeze(0) 
     return image
 
 def predict_pest(image_path):
     image = preprocess_image(image_path)
 
-    # Perform inference
     with torch.no_grad():
         outputs = model3(image)
 
-    # Get the predicted class
     _, predicted = torch.max(outputs, 1)
     return predicted.item()
 
-# Image Upload and Prediction Section
 @app.route('/upload_image', methods=['POST'])
 def upload_image():
     if 'file' not in request.files:
@@ -238,21 +230,19 @@ def upload_image():
         return redirect(request.url)
     
     if file:
-        # Save the file to a temporary location
         file_path = os.path.join('uploads', file.filename)
         file.save(file_path)
 
-        # Make a prediction
+   
         predicted_class = predict_pest(file_path)
         predicted_label = imagenet_labels[predicted_class - 1]
 
-        # Return the result to the pest_detection.html template
         return render_template('pest_detection.html', label=predicted_label)
 
     return render_template('index.html')
 
-# Ensure the uploads directory exists
+
 if __name__ == '__main__':
-    init_db()  # Initialize the database when the app starts
+    init_db()  
     os.makedirs('uploads', exist_ok=True)
     app.run(debug=True)
