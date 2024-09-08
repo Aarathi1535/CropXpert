@@ -8,15 +8,16 @@ body {
 }
 .logo {
     position: absolute;
-    top: 30px; 
-    left: 10px; 
+    top: 20px; 
+    left: 80px; 
 }
 
 .logo img {
-    height: 100px; 
-    width: 100px; 
+    height: 90px;
+    width: 100px;
     border-radius: 50%;
     object-fit: cover;
+    border: 2px solid white;
     border-style: groove;
 }
 
@@ -49,6 +50,37 @@ header {
     padding-left: 20px;
 }
 
+
+.container {
+    width: 80%;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+
+.branding {
+    flex-grow: 1;
+    text-align: center;
+}
+
+.logout-btn {
+    margin-left: auto;
+}
+
+.logout-link {
+    padding: 10px 20px;
+    background-color: red;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.logout-link:hover {
+    background-color: darkred;
+}
 nav ul {
     list-style: none;
     padding: 0;
@@ -227,22 +259,18 @@ footer {
     bottom: 0;
 }
 
-h1{
+h1, h2 {
     color: #89c28b;
-    font-weight: bold;
-}
-h2 {
-    color: #4CAF50;
     font-weight: bold;
 }
 
 #showcase {
+    background-color: #fff;
     padding: 20px;
     margin: 20px auto;
     border-radius: 8px;
     max-width: 800px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    background-color: #fff;
 }
 
 #showcase p {
@@ -312,5 +340,13 @@ td {
 
 #input-form input[type="submit"]:hover {
     background-color: #45a049;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
 }
 
