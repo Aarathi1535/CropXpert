@@ -7,7 +7,6 @@ document.addEventListener('DOMContentLoaded', function () {
             event.preventDefault();
             var targetTab = this.getAttribute('data-tab');
 
-            // Remove 'active' class from all tab contents and tab links
             tabContents.forEach(function(content) {
                 content.classList.remove('active');
             });
@@ -15,13 +14,16 @@ document.addEventListener('DOMContentLoaded', function () {
                 tabLink.classList.remove('active');
             });
 
-            // Add 'active' class to the target tab content and clicked tab link
             document.getElementById(targetTab).classList.add('active');
             this.classList.add('active');
 
-            // Optional: Smooth scroll to the top of the clicked section
             var offsetTop = document.getElementById(targetTab).offsetTop;
             window.scrollTo({ top: offsetTop, behavior: 'smooth' });
         });
     });
 });
+function toggleNav() {
+    var navBar = document.getElementById('navBar');
+    navBar.classList.toggle('closed'); 
+}
+
