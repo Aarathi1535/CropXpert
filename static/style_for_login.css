@@ -4,6 +4,7 @@
     --white: #fff;
     --black: #096013; 
     --lightBulue: #17a;
+
 }
 
 *{
@@ -21,7 +22,6 @@ body{
     background-image: url("login-background.jpg");
     background-size: cover;
     background-attachment: fixed;
-
 }
 
 .wrapper{
@@ -144,7 +144,7 @@ form button{
 }
 
 form button:hover{
-    box-shadow: 0 0 10px rgba(5, 107, 82, 0.8);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
 }
 
 form .linkTxt{
@@ -155,7 +155,7 @@ form .linkTxt{
 }
 
 .linkTxt p a{
-    color: rgb(83, 200, 103);
+    color: rgba(125, 205, 130, 0.847);
     text-decoration: none;
     font-weight: 600;
 }
@@ -175,7 +175,6 @@ form .linkTxt{
     filter: blur(10px);
     transition-delay: calc(.1s * var(--i));
 }
-
 
 .wrapper .info-text{
     position: absolute;
@@ -222,10 +221,6 @@ form .linkTxt{
     transition-delay: calc(.1s * var(--i));
 }
 
-
-
-
-
 .wrapper .rotate-bg{
     position: absolute;
     top: -4px;
@@ -243,16 +238,6 @@ form .linkTxt{
     transform: rotate(0) skewY(0);
     transition-delay: 0.5s;
 }
-
-
-
-
-
-
-
-
-
-
 
 .wrapper .form-box.register{
     padding: 0 40px 0 60px;
