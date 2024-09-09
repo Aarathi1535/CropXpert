@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crop Recommendation System</title>
+    <title>AgriCure</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
@@ -21,17 +21,18 @@
                 <a href="/logout" class="logout-link">Logout</a>
             </div>
         </div>
-            <nav>
-                <ul>
-                    <li><a href="#home" class="tab-link active" data-tab="home">Home</a></li>
-                    <li><a href="#recommendations" class="tab-link active" data-tab="recommendations">Crop Recommendations</a></li>
-                    <li><a href="#fertirecommendations" class="tab-link active" data-tab="fertirecommendations">Fertilizer Recommendations</a></li>
-                    <li><a href="#pestdetection" class="tab-link active" data-tab="pestdetection">Pest Detection</a></li>
-                    <li><a href="#about" class="tab-link" data-tab="about">About</a></li>
-                    <li><a href="#contact" class="tab-link" data-tab="contact">Contact</a></li>
-                </ul>
-            </nav>
+        <div class="nav-bar" id="navBar">
+            <span class="close-btn" onclick="toggleNav()">&#10095;</span> 
+            <ul>
+                <li><a href="#home" class="tab-link active" data-tab="home">Home</a></li>
+                <li><a href="#recommendations" class="tab-link" data-tab="recommendations">Crop Recommendations</a></li>
+                <li><a href="#fertirecommendations" class="tab-link" data-tab="fertirecommendations">Fertilizer Recommendations</a></li>
+                <li><a href="#pestdetection" class="tab-link" data-tab="pestdetection">Pest Detection</a></li>
+                <li><a href="#about" class="tab-link" data-tab="about">About</a></li>
+                <li><a href="#contact" class="tab-link" data-tab="contact">Contact</a></li>
+            </ul>
         </div>
+        
     </header>
     <main>
         <div class="container">
