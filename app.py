@@ -57,21 +57,30 @@ def execute_query(query, args=()):
     cursor.close()
     conn.close()
 
-@app.route('/signup', methods=['POST'])
+@app.route('/signup', methods=['GET', 'POST'])
 def signup():
     if request.method == 'POST':
-        username = request.form['username']
-        email = request.form['email']
-        password = generate_password_hash(request.form['password'], method='pbkdf2:sha256')
+        username = request.form.get('username')
+        email = request.form.get('email')
+        password = request.form.get('password')
+
+        if not username or not email or not password:
+            flash('All fields are required!', 'danger')
+            return redirect(url_for('login'))
+
+        hashed_password = generate_password_hash(password, method='pbkdf2:sha256')
 
         query = "INSERT INTO users (name, email, password) VALUES (%s, %s, %s)"
         try:
-            execute_query(query, (username, email, password))
-            flash('You have successfully signed up! Please log in.', 'success')
+            execute_query(query, (username, email, hashed_password))
+            flash('Signup successful! Please log in.', 'success')
             return redirect(url_for('login'))
-        except psycopg2.IntegrityError:
-            flash('User with this email already exists.', 'danger')
+        except Exception as e:
+            flash(f'Signup failed: {e}', 'danger')
+            return redirect(url_for('login'))
+
     return redirect(url_for('login'))
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
