@@ -8,7 +8,7 @@ body {
 }
 .logo {
     position: absolute;
-    top: 20px; 
+    top: 45px; 
     left: 80px; 
 }
 
@@ -71,7 +71,7 @@ header {
 
 .logout-link {
     padding: 10px 20px;
-    background-color: red;
+    background-color: rgba(255, 0, 0, 0.402);
     color: white;
     text-decoration: none;
     border-radius: 5px;
@@ -79,7 +79,7 @@ header {
 }
 
 .logout-link:hover {
-    background-color: darkred;
+    background-color: rgba(139, 0, 0, 0.619);
 }
 nav ul {
     list-style: none;
@@ -150,15 +150,19 @@ h2{
 }
 
 header {
-    background: #333;
+    background: #11531cd6;
     color: #fff;
     padding: 10px 0;
     text-align: center;
+    position: relative;
+    animation: slideDown 1s ease-out;
 }
 
 header nav ul {
     padding: 0;
     list-style: none;
+    opacity: 0; 
+    animation: fadeIn 2s ease-in forwards 0.5s; 
 }
 
 header nav ul li {
@@ -166,15 +170,139 @@ header nav ul li {
     margin: 0 10px;
     font-family: 'Merriweather', serif;
     font-size: 20px;
+    transform: translateY(-20px); 
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    opacity: 0; 
+    animation: slideInUp 0.5s ease forwards;
 }
 
 header nav ul li a {
     color: #fff;
     text-decoration: none;
+    position: relative;
+    display: inline-block;
+    padding-bottom: 2px;
+    transition: color 0.3s ease;
 }
 
 header nav ul li a:hover {
-    text-decoration: underline;
+    text-decoration: none;
+    color: #ffeb3b; 
+}
+
+header nav ul li a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 2px;
+    width: 100%;
+    background-color: #ffeb3b;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s ease;
+}
+
+header nav ul li a:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+@keyframes slideDown {
+    from {
+        transform: translateY(-100%);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideInUp {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+.nav-bar {
+    background-color: #036113b9;
+    padding: 20px;
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 200px;
+    z-index: 1000;
+    box-shadow: -2px 0 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.3s ease; 
+    transform: translateX(0); 
+}
+
+.nav-bar.closed {
+    transform: translateX(200px); 
+}
+
+.nav-bar ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+
+.nav-bar ul li {
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.nav-bar ul li a {
+    display: block;
+    color: #fff;
+    text-decoration: none;
+    font-size: 18px;
+    font-family: 'Merriweather', serif;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    transition: background-color 0.3s, transform 0.3s ease;
+}
+
+.nav-bar ul li a:hover {
+    background-color: #edde56d8;
+    color: #036113;
+    transform: scale(1.1); 
+}
+
+.nav-bar ul li a.active {
+    background-color: #ffeb3b91;
+    color: #084512;
+    font-weight: bold;
+}
+
+/* Close button */
+.close-btn {
+    color: #054b32;
+    font-size: 30px;
+    cursor: pointer;
+    position: absolute;
+    left: -40px; /* Place outside the nav-bar */
+    top: 50%;
+    transform: translateY(-50%);
+    transition: transform 0.3s ease;
+}
+
+.close-btn:hover {
+    transform: translateY(-50%) scale(1.1); /* Zoom in on hover */
 }
 
 h2 {
