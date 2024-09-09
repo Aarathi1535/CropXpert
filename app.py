@@ -57,7 +57,7 @@ def execute_query(query, args=()):
     cursor.close()
     conn.close()
 
-@app.route('/signup', methods=['GET', 'POST'])
+@app.route('/signup', methods=['POST'])
 def signup():
     if request.method == 'POST':
         username = request.form['username']
@@ -71,7 +71,7 @@ def signup():
             return redirect(url_for('login'))
         except psycopg2.IntegrityError:
             flash('User with this email already exists.', 'danger')
-    return render_template('signup.html')
+    return redirect(url_for('login'))
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
