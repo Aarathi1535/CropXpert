@@ -130,7 +130,8 @@ def cropdetails():
     results = ''
     if cropname in df5['Crop Name'].values:
         results = df5[df5['Crop Name'] == cropname]['Info'].iloc[0]
-    return render_template('cropdetails.html', result=results)
+    crop_image_path = f"images/{results}.jpg"  
+    return render_template('cropdetails.html', crop_image_path=crop_image_path, result=results)
 
 # Crop Recommendation Section
 df = pd.read_csv("Crop_recommendation.csv")
@@ -150,7 +151,11 @@ def result():
     humidity = float(request.form['humidity'])
     ph = float(request.form['ph'])
     rainfall = float(request.form['rainfall'])
-    prediction = model.predict([[nitrogen, phosphorus, potassium, temperature, humidity, ph, rainfall]])
+
+    # Predict the crop
+    prediction = model.predict([[nitrogen, phosphorus, potassium, temperature, humidity, ph, rainfall]])[0]
+
+    # Crop recommendation result string
     result = (
         f"As per your given inputs:<br> "
         f"Nitrogen Content = {nitrogen}<br> "
@@ -160,9 +165,13 @@ def result():
         f"Humidity = {humidity}<br> "
         f"pH value = {ph}<br> "
         f"Rainfall in mm = {rainfall}<br>"
-        f"The best crop that suits your inputs is: <strong>{prediction[0]}</strong>"
+        f"The best crop that suits your inputs is: <strong>{prediction}</strong>"
     )
-    return render_template('result.html', result=result)
+
+    # Image path for the predicted crop
+    image_path = f"images/{prediction}.jpg"
+
+    return render_template('result.html', result=result, prediction=prediction, image_path=image_path)
 
 # Fertilizer Recommendation Section
 df2 = pd.read_csv("Fertilizer Prediction.csv")
@@ -187,7 +196,7 @@ def result2():
     phospho = int(request.form['phospho'])
     soil = int(request.form['soil'])
     crop = int(request.form['crop'])
-    prediction = model2.predict([[temp, humid, moisture, nitro, potash, phospho, soil, crop]])
+    prediction2 = model2.predict([[temp, humid, moisture, nitro, potash, phospho, soil, crop]])
     result = (
         f"As per your given inputs:<br> "
         f"Temperature = {temp}<br> "
@@ -198,9 +207,12 @@ def result2():
         f"Phosphorus Content = {phospho}<br> "
         f"Soil Type = {soil}<br>"
         f"Crop Type = {crop}<br>"
-        f"The best Fertilizer that suits your inputs is: <strong>{prediction[0]}</strong>"
+        f"The best Fertilizer that suits your inputs is: <strong>{prediction2[0]}</strong>"
     )
-    return render_template('result2.html', result=result)
+    image_path2 = f"images/{prediction2[0].lower()}.jpg"
+
+    return render_template('result2.html', result=result, prediction=prediction2[0].lower(), image_path=image_path2)
+
 
 with open("imagenet-simple-labels.json", 'r') as file:
     imagenet_labels = json.load(file)

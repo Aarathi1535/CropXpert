@@ -71,7 +71,7 @@ header {
 
 .logout-link {
     padding: 10px 20px;
-    background-color: rgba(255, 0, 0, 0.402);
+    background-color: rgba(208, 255, 0, 0.402);
     color: white;
     text-decoration: none;
     border-radius: 5px;
@@ -79,7 +79,7 @@ header {
 }
 
 .logout-link:hover {
-    background-color: rgba(139, 0, 0, 0.619);
+    background-color: rgba(208, 255, 0, 0.402);
 }
 nav ul {
     list-style: none;
@@ -291,12 +291,12 @@ header nav ul li a:hover::after {
 
 /* Close button */
 .close-btn {
-    color: #054b32;
+    color: #47be59c8;
     font-size: 30px;
     cursor: pointer;
     position: absolute;
     left: -40px; /* Place outside the nav-bar */
-    top: 50%;
+    top: 20%;
     transform: translateY(-50%);
     transition: transform 0.3s ease;
 }
