@@ -18,8 +18,6 @@ This project is a culmination of machine learning, frontend, backend, and databa
 ![Technical](/WorkflowDiagram.png)         
 
 ![Pest](/PestDetectionFlowchart.png)
-
-
 The Flask application was deployed on render.com:
 1. Build Command: `$pip install -r requirements.txt`
 2. Start Command: `$gunicorn -b :$PORT app:app`
