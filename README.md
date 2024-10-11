@@ -14,6 +14,10 @@ This project is a culmination of machine learning, frontend, backend, and databa
 7. Confusion Matrix - To plot the comparison between predicted and tested values
 8. Libraries: SQLAlchemy, scikit-learn, seaborn, matplotlib, pandas, and flask
 
+**Workflow Diagrams:**
+![Technical](/Workflow Diagram.png)         ![Pest](/Pest Detection Flowchart.png)
+
+
 The Flask application was deployed on render.com:
 1. Build Command: `$pip install -r requirements.txt`
 2. Start Command: `$gunicorn -b :$PORT app:app`
