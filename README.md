@@ -15,7 +15,9 @@ This project is a culmination of machine learning, frontend, backend, and databa
 8. Libraries: SQLAlchemy, scikit-learn, seaborn, matplotlib, pandas, and flask
 
 **Workflow Diagrams:**
-![Technical](/WorkflowDiagram.png)         ![Pest](/PestDetectionFlowchart.png)
+![Technical](/WorkflowDiagram.png)         
+
+![Pest](/PestDetectionFlowchart.png)
 
 
 The Flask application was deployed on render.com:
