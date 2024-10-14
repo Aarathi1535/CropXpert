@@ -28,8 +28,11 @@
                 <li><a href="#recommendations" class="tab-link" data-tab="recommendations">Crop Recommendations</a></li>
                 <li><a href="#fertirecommendations" class="tab-link" data-tab="fertirecommendations">Fertilizer Recommendations</a></li>
                 <li><a href="#pestdetection" class="tab-link" data-tab="pestdetection">Pest Detection</a></li>
+                <li><a href="#crop-disease-detection" class="tab-link" data-tab="crop-disease-detection">Crop Disease Detection</a></li>
+                <li><a href="#purchase" class="tab-link" data-tab="purchase">Purchase</a></li> 
                 <li><a href="#about" class="tab-link" data-tab="about">About</a></li>
                 <li><a href="#contact" class="tab-link" data-tab="contact">Contact</a></li>
+                
             </ul>
         </div>
         
@@ -494,6 +497,56 @@
                         <button type="submit">Upload and Predict</button>
                     </form>
                 </section>
+            </section>
+
+            <section id="crop-disease-detection" class="tab-content">
+                <h2>Crop Disease Detection</h2>
+                <section id="showcase">
+                    <h1>Upload an Image to detect if it is affected by a disease.</h1>
+                    <p>Upload an image of a crop to diagnose it.</p>
+                </section>
+                <section id="input-form">
+                <form method="POST" action="/upload_crop_image" enctype="multipart/form-data">
+                    <div class="file-upload">
+                        <label for="file">Upload Crop Image:</label>
+                        <input type="file" id="file" name="file" accept="image/*" required>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn-submit">Detect Disease</button>
+                    </div>
+                </form>
+            </section>
+            </section>
+            
+            <!-- Purchase Section -->
+            <section id="purchase" class="tab-content">
+                <h2>Purchase Seeds, Fertilizers, and More</h2>
+                <div class="product-container">
+                    <div class="product-card">
+                        <img src="{{ url_for('static', filename='images/seeds.jpg') }}" alt="Seeds">
+                        <div class="product-details">
+                            <h3>Seeds</h3>
+                            <p>High-quality seeds for optimal yield.</p>
+                            <a href="/purchase-seeds" class="buy-btn">Buy Now</a>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <img src="{{ url_for('static', filename='images/fertilizer.jpeg') }}" alt="Fertilizers">
+                        <div class="product-details">
+                            <h3>Fertilizers</h3>
+                            <p>Best fertilizers to boost crop growth.</p>
+                            <a href="/purchase-fertilizers" class="buy-btn">Buy Now</a>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <img src="{{ url_for('static', filename='images/agricultural-tools.jpg') }}" alt="Tools">
+                        <div class="product-details">
+                            <h3>Farming Tools</h3>
+                            <p>Essential tools for efficient farming.</p>
+                            <a href="/purchase-tools" class="buy-btn">Buy Now</a>
+                        </div>
+                    </div>
+                </div>
             </section>
 
             <section id="about" class="tab-content">

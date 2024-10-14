@@ -1,3 +1,211 @@
+/* CSS styles */
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background-image: url("img1.jpg");
+    background-size: cover;
+    background-position: center;
+    color: white;
+    text-align: center;
+}
+
+header {
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.7); /* Adjusted transparency for better readability */
+}
+
+h1 {
+    font-size: 40px; /* Increased font size */
+    margin: 0;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8); /* Added text shadow for a bold look */
+}
+
+.logo img {
+    height: 120px; /* Slightly increased image size */
+    width: auto;
+    margin-bottom: 20px;
+}
+
+.branding {
+    display: inline-block;
+    margin-top: 20px;
+}
+
+.logout-btn {
+    position: absolute; 
+    top: 70px;
+    right: 150px; 
+  }
+
+  .logout-link {
+    padding: 10px 20px;
+    background-color: rgba(208, 255, 0, 0.402);
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.logout-link:hover {
+    background-color: #45a049;
+}
+
+.purchase-container {
+    margin-top: 10px;
+}
+
+.purchase-card {
+    background-color: rgba(255, 255, 255, 0.95);
+    padding: 100px; 
+    border-radius: 15px; 
+    display: inline-block;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2); 
+    width: 800px; 
+    margin: 10px; 
+}
+
+.purchase-card h2 {
+    font-size: 28px; /* New font size for titles inside cards */
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.purchase-card p {
+    font-size: 16px;
+    color: #666;
+}
+
+.checkout-btn {
+    padding: 12px 25px; /* Increased padding for a better button look */
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px; /* Slightly larger font size */
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Smooth hover effect */
+}
+
+.checkout-btn:hover {
+    background-color: #45a049;
+}
+
+/* Added footer styling */
+footer {
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    text-align: center;
+    margin-top: 50px;
+}
+
+footer p {
+    font-size: 14px;
+    margin: 0;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 10px;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+}
+header {
+    background: #11531ccb;
+    color: #fff;
+    padding: 10px 0;
+    text-align: center;
+    position: relative;
+    animation: slideDown 1s ease-out;
+}
+
+header nav ul {
+    padding: 0;
+    list-style: none;
+    opacity: 0; 
+    animation: fadeIn 2s ease-in forwards 0.5s; 
+}
+
+header nav ul li {
+    display: inline;
+    margin: 0 10px;
+    font-family: 'Merriweather', serif;
+    font-size: 20px;
+    transform: translateY(-20px); 
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    opacity: 0; 
+    animation: slideInUp 0.5s ease forwards;
+}
+
+header nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    position: relative;
+    display: inline-block;
+    padding-bottom: 2px;
+    transition: color 0.3s ease;
+}
+
+header nav ul li a:hover {
+    text-decoration: none;
+    color: #ffeb3b; 
+}
+
+header nav ul li a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 2px;
+    width: 100%;
+    background-color: #ffeb3b;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s ease;
+}
+
+header nav ul li a:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+.logo {
+    position: absolute;
+    top: 45px; 
+    left: 80px; 
+}
+
+.logo img {
+    height: 90px;
+    width: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid white;
+    border-style: groove;
+}
+.logout-btn {
+    margin-left: auto;
+}
+
+.logout-link {
+    padding: 10px 20px;
+    background-color: rgba(208, 255, 0, 0.402);
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.logout-link:hover {
+    background-color: rgba(208, 255, 0, 0.402);
+}
 body {
     font-family: Arial, sans-serif;
     line-height: 1.6;
@@ -32,14 +240,6 @@ body {
     overflow: hidden;
     background:  #fff;
     color: #333;
-    padding: 10px 0;
-    text-align: center;
-    position: relative;
-}
-
-header {
-    background: #333;
-    color: #fff;
     padding: 10px 0;
     text-align: center;
     position: relative;
@@ -523,48 +723,4 @@ td {
 .buy-btn:hover {
     background-color: #218838;
 }
-.purchase-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    width: 100%;
-}
 
-/* White block (card) styling */
-.purchase-card {
-    background-color: white;
-    padding: 40px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Soft shadow for a card effect */
-    text-align: center; /* Center-align the text inside the block */
-    max-width: 400px;
-    width: 100%; /* Ensure it doesn't exceed max width */
-}
-
-header h1 {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-/* Checkout button styling */
-.checkout-btn {
-    background-color: #28a745;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.checkout-btn:hover {
-    background-color: #218838;
-}
-
-/* Responsive adjustments for small screens */
-@media (max-width: 600px) {
-    .purchase-card {
-        padding: 20px;
-        width: 90%;
-    }
-}
