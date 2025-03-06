@@ -1,4 +1,4 @@
-# AgriCure - Crop Recommendation System
+# CropXpert – Your AI Agriculture Partner
 
 ![Crop Recommendation](/static/crop-recommend.jpg)
 
