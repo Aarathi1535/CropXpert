@@ -279,19 +279,19 @@ header nav ul li a:hover::after {
 
 .nav-bar ul li a:hover {
     background-color: #edde56d8;
-    color: #036113;
+    color: #175722;
     transform: scale(1.1); 
 }
 
 .nav-bar ul li a.active {
     background-color: #ffeb3b91;
-    color: #084512;
+    color: #3b9f4c;
     font-weight: bold;
 }
 
 /* Close button */
 .close-btn {
-    color: #47be59c8;
+    color: #139126c8;
     font-size: 30px;
     cursor: pointer;
     position: absolute;

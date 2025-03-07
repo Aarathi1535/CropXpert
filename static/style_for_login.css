@@ -1,4 +1,51 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+.flash-messages {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 16px;
+    text-align: center;
+    font-weight: 600;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.flash-success {
+    background-color: rgba(125, 205, 130, 0.847);
+    color: var(--white);
+    border: 2px solid var(--black);
+}
+
+.flash-error {
+    background-color: #ff4d4d;
+    color: var(--white);
+    border: 2px solid var(--black);
+}
+
+.flash-info {
+    background-color: #17a;
+    color: var(--white);
+    border: 2px solid var(--black);
+}
+
+.flash-warning {
+    background-color: #ffcc00;
+    color: var(--black);
+    border: 2px solid var(--black);
+}
+
+.flash-messages.fade-out {
+    opacity: 1;
+    transition: opacity 1s ease-in-out;
+}
+
+.flash-messages.fade-out.hidden {
+    opacity: 0;
+}
 
 :root{
     --white: #fff;
@@ -153,7 +200,17 @@ form .linkTxt{
     text-align: center;
     margin: 20px 0 10px;
 }
+.wrapper .register {
+    display: none; /* This might be the issue */
+}
 
+.wrapper.active .register {
+    display: block; /* Make register form visible when active */
+}
+
+.wrapper.active .login {
+    display: none; /* Hide login form when active */
+}
 .linkTxt p a{
     color: rgba(125, 205, 130, 0.847);
     text-decoration: none;
@@ -244,7 +301,8 @@ form .linkTxt{
     right: 0;
 }
 
-.wrapper.active .form-box.register{
+.wrapper.active .form-box.register {
+    opacity: 1;
     pointer-events: auto;
 }
 
