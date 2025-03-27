@@ -28,3 +28,5 @@ The Flask application was deployed on render.com:
 ![Report](/static/Report-image.png)
 
 **Here is the link for the website**: [https://crop-recommendation-system-app.onrender.com](https://crop-recommendation-system-app.onrender.com)
+**For complete preview of enhanced features of CropXpert, visit this link**: https://preview--greenfield-sage.lovable.app/
+**For video demo go through this**: https://youtu.be/c43HSkkh4GY
