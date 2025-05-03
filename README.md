@@ -58,7 +58,7 @@ pip install -r requirements.txt
 
 # Run the app using Gunicorn (Render Deployment)
 gunicorn -b :$PORT app:app
-
+```
 ---
 
 ## 📊 Crop Recommendation – Analysis Report
